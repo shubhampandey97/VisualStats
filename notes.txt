@@ -1,0 +1,5 @@
+python -m venv stats_env
+stats_env\Scripts\activate
+
+
+“I set up CI early to automatically validate core logic and data consistency using pytest on every push and PR. This prevents regressions as new visualizations are added.”
