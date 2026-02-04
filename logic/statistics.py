@@ -16,3 +16,23 @@ def compute_mode(data, bins=50):
     """
     counts, bin_edges = np.histogram(data, bins=bins)
     return float(bin_edges[counts.argmax()])
+
+
+def compute_variance(data: np.ndarray) -> float:
+    return float(np.var(data))
+
+
+def compute_std(data: np.ndarray) -> float:
+    return float(np.std(data))
+
+
+def compute_quartiles(data: np.ndarray):
+    q1 = np.percentile(data, 25)
+    q2 = np.percentile(data, 50)
+    q3 = np.percentile(data, 75)
+    return q1, q2, q3
+
+
+def compute_iqr(data: np.ndarray) -> float:
+    q1, _, q3 = compute_quartiles(data)
+    return q3 - q1
