@@ -10,7 +10,7 @@ from visualizations import register_visualizations
 from config.constants import COLORS
 from data.generator import generate_skewed_data
 from logic.skewness import get_skew_label, get_skew_state
-from logic.statistics import compute_mean, compute_median, compute_mode
+from logic.statistics import compute_mean, compute_median, compute_mode, compute_skewness
 # from visualizations.distribution import plot_distribution
 
 from logic.statistics import (
@@ -58,6 +58,8 @@ std_dev = compute_std(data)
 q1, q2, q3 = compute_quartiles(data)
 iqr = compute_iqr(data)
 
+skew_value = compute_skewness(data)
+
 
 state = get_skew_state(skewness)
 fill_color = COLORS[state]
@@ -79,6 +81,7 @@ with c1:
 with c2:
     st.metric("Variance", f"{variance:.2f}")
     st.metric("Std Dev", f"{std_dev:.2f}")
+    st.metric("Skewness", f"{skew_value:.2f}")
 
 with c3:
     st.metric("Q1", f"{q1:.2f}")

@@ -36,3 +36,15 @@ def compute_quartiles(data: np.ndarray):
 def compute_iqr(data: np.ndarray) -> float:
     q1, _, q3 = compute_quartiles(data)
     return q3 - q1
+
+def compute_skewness(data: np.ndarray) -> float:
+    """
+    Compute skewness of the distribution.
+    """
+    mean = np.mean(data)
+    std = np.std(data)
+
+    if std == 0:
+        return 0.0
+
+    return float(np.mean(((data - mean) / std) ** 3))

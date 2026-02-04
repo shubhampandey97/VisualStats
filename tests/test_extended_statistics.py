@@ -4,6 +4,7 @@ from logic.statistics import (
     compute_std,
     compute_quartiles,
     compute_iqr,
+    compute_skewness,
 )
 
 
@@ -29,3 +30,8 @@ def test_quartiles():
 def test_iqr():
     data = np.array([1, 2, 3, 4, 5])
     assert compute_iqr(data) == 2
+
+def test_skewness_symmetric_distribution():
+    data = [1, 2, 3, 4, 5]
+    skew = compute_skewness(data)
+    assert abs(skew) < 1e-6
