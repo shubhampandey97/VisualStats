@@ -31,4 +31,4 @@ def render_histogram(data: np.ndarray, config: dict) -> None:
     ax.set_xlabel("Value")
     ax.set_ylabel("Frequency")
 
-    plt.show()
+    return fig

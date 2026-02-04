@@ -78,5 +78,8 @@ if visualization_name == "Histogram":
 # Render visualization via registry
 # -----------------------------
 render_fn = registry.get(visualization_name)
-render_fn(data, config=config)
+# render_fn(data, config=config)
+fig = render_fn(data, config=config)
+st.pyplot(fig)
+
 
