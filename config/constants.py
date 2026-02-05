@@ -4,8 +4,8 @@ COLORS = {
     "mean": "#ff1100",
     "median": "#00c2ff",
     "mode": "#ffb703",
-    "right_skew": "#ffd166",
-    "left_skew": "#81daf5",
+    "right": "#ffd166",
+    "left": "#81daf5",
     "symmetric": "#f5584d",
 }
 
