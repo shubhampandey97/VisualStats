@@ -8,3 +8,5 @@ After merging the pull request, feature branches were deleted to maintain reposi
 This follows standard industry practice where short-lived branches are removed after successful CI, review, and merge, keeping the codebase clean and reducing maintenance overhead.
 
 After setting up CI and branch protection, I refactored the app into a plugin-based architecture to support multiple visualizations without modifying core logic.
+
+git remote -v
