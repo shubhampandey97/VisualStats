@@ -22,6 +22,8 @@ from logic.statistics import (
 from data.csv_loader import load_numeric_column, CSVDataError
 from logic.transforms import apply_skewness
 from logic.hypothesis import normality_test, one_sample_ttest
+from ui.insight_cards import render_skewness_cards
+
 
 
 
@@ -190,6 +192,10 @@ if t_p > 0.05:
 else:
     st.error("Mean is significantly different from test value")
 
+
+
+st.subheader("📘 Skewness Interpretation")
+render_skewness_cards()
 
 # -----------------------------
 # Visualization Selector
