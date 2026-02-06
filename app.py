@@ -21,6 +21,8 @@ from logic.statistics import (
 
 from data.csv_loader import load_numeric_column, CSVDataError
 from logic.transforms import apply_skewness
+from logic.hypothesis import normality_test, one_sample_ttest
+
 
 
 
@@ -155,6 +157,38 @@ with c3:
     st.metric("Q1", f"{q1:.2f}")
     st.metric("Q3", f"{q3:.2f}")
     st.metric("IQR", f"{iqr:.2f}")
+
+
+# =============================
+# Hypothesis Testing
+# =============================
+st.subheader("🧪 Hypothesis Testing")
+
+# --- Normality Test ---
+stat, p = normality_test(data)
+
+st.write("**Normality Test (D’Agostino-Pearson)**")
+st.write(f"Statistic: {stat:.3f} | p-value: {p:.5f}")
+
+if p > 0.05:
+    st.success("Data looks normally distributed (fail to reject H₀)")
+else:
+    st.warning("Data is NOT normally distributed (reject H₀)")
+
+
+# --- One-sample t-test ---
+st.write("### One-Sample t-Test")
+
+popmean = st.number_input("Test mean value", value=float(mean))
+
+t_stat, t_p = one_sample_ttest(data, popmean)
+
+st.write(f"t-statistic: {t_stat:.3f} | p-value: {t_p:.5f}")
+
+if t_p > 0.05:
+    st.success("Mean is NOT significantly different from test value")
+else:
+    st.error("Mean is significantly different from test value")
 
 
 # -----------------------------
