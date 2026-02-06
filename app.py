@@ -20,6 +20,8 @@ from logic.statistics import (
 )
 
 from data.csv_loader import load_numeric_column, CSVDataError
+from logic.transforms import apply_skewness
+
 
 
 # -----------------------------
@@ -98,6 +100,21 @@ else:
     else:
         st.info("Upload a CSV file to continue.")
         st.stop()
+
+
+st.subheader("⚙️ Distribution Transformation")
+
+skewness = st.slider(
+    "Apply skewness transformation",
+    -10.0,
+    10.0,
+    0.0,
+    0.5,
+    key="global_skewness_slider",
+)
+
+
+data = apply_skewness(data, skewness)
 
 
 # -----------------------------

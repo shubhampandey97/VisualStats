@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use("Agg")  # headless backend for tests/CI
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
