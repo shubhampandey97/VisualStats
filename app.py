@@ -1,4 +1,11 @@
 # app.py
+from core.logging import setup_logging
+import logging
+
+setup_logging()
+logger = logging.getLogger(__name__)
+
+logger.info("App started")
 
 import streamlit as st
 
@@ -68,7 +75,8 @@ if data_source == "Synthetic Distribution":
         0.5,
         key="generation_skewness_slider",
     )
-
+    
+    logger.debug("Generating synthetic skewed data")
     data = generate_skewed_data(gen_skewness)
 
     state = get_skew_state(gen_skewness)
@@ -87,6 +95,7 @@ else:
             numeric_columns = df.select_dtypes(include="number").columns.tolist()
 
             if not numeric_columns:
+                logger.warning("CSV uploaded but no numeric columns found")
                 st.error("No numeric columns found in CSV.")
                 st.stop()
 
@@ -99,6 +108,7 @@ else:
             fill_color = "#4CAF50"  # neutral color for real data
 
         except CSVDataError as e:
+            logger.error(f"CSV parsing failed: {e}")
             st.error(str(e))
             st.stop()
 
@@ -215,7 +225,15 @@ visualization_name = st.selectbox(
 config = {}
 
 if visualization_name == "Histogram":
-    bins = st.slider("Number of bins", 5, 50, 15, key="bins_slider")
+    from config.settings import CONFIG
+
+    bins = st.slider(
+        "Number of bins",
+        CONFIG.min_bins,
+        CONFIG.max_bins,
+        CONFIG.default_bins,
+        key="bins_slider",
+    )
     config = {
         "bins": bins,
         "color": fill_color,
