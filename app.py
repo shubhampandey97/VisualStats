@@ -225,7 +225,15 @@ visualization_name = st.selectbox(
 config = {}
 
 if visualization_name == "Histogram":
-    bins = st.slider("Number of bins", 5, 50, 15, key="bins_slider")
+    from config.settings import CONFIG
+
+    bins = st.slider(
+        "Number of bins",
+        CONFIG.min_bins,
+        CONFIG.max_bins,
+        CONFIG.default_bins,
+        key="bins_slider",
+    )
     config = {
         "bins": bins,
         "color": fill_color,
