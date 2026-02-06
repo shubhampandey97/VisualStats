@@ -23,6 +23,7 @@ from data.csv_loader import load_numeric_column, CSVDataError
 from logic.transforms import apply_skewness
 from logic.hypothesis import normality_test, one_sample_ttest
 from ui.insight_cards import render_skewness_cards
+from ui.interpretation import render_interpretation_banner
 
 
 
@@ -229,3 +230,12 @@ if visualization_name == "Histogram":
 render_fn = registry.get(visualization_name)
 fig = render_fn(data, config=config)
 st.pyplot(fig)
+
+
+# -----------------------------
+# Interpretation Section
+# -----------------------------
+st.divider()
+st.subheader("📌 Interpretation")
+render_interpretation_banner(skew_value)
+
