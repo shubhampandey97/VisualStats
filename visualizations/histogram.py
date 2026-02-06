@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from visualizations.markers import draw_markers
+from config.constants import COLORS
+
+
 
 def render_histogram(data: np.ndarray, config: dict) -> None:
     """
@@ -27,6 +31,9 @@ def render_histogram(data: np.ndarray, config: dict) -> None:
         linewidth=2.5,
         alpha=alpha,
     )
+    
+    draw_markers(ax, data, COLORS)
+
 
     ax.set_xlabel("Value")
     ax.set_ylabel("Frequency")

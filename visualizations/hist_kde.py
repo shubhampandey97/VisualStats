@@ -5,6 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 
+from visualizations.markers import draw_markers
+from config.constants import COLORS
+
 
 def render_histogram_kde(data: np.ndarray, config: dict):
     """
@@ -29,6 +32,9 @@ def render_histogram_kde(data: np.ndarray, config: dict):
         edgecolor=edgecolor,
         alpha=alpha,
     )
+    
+    draw_markers(ax, data, COLORS)
+
 
     # KDE curve
     kde = gaussian_kde(data)
