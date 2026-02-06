@@ -28,7 +28,6 @@ from logic.transforms import apply_skewness
 # App configuration
 # -----------------------------
 st.set_page_config(page_title="Statistics Explorer", layout="centered")
-
 st.title("📊 Statistics Explorer")
 
 
@@ -55,21 +54,22 @@ data_source = st.radio(
 # -----------------------------
 if data_source == "Synthetic Distribution":
 
-    skewness = st.slider(
-        "Skewness",
+    # Synthetic generation skewness (ONLY for generation)
+    gen_skewness = st.slider(
+        "Generation Skewness",
         -10.0,
         10.0,
         0.0,
         0.5,
-        key="synthetic_skewness_slider",
+        key="generation_skewness_slider",
     )
 
-    data = generate_skewed_data(skewness)
+    data = generate_skewed_data(gen_skewness)
 
-    state = get_skew_state(skewness)
+    state = get_skew_state(gen_skewness)
     fill_color = COLORS[state]
 
-    st.write(f"Distribution Type: **{get_skew_label(skewness)}**")
+    st.write(f"Distribution Type: **{get_skew_label(gen_skewness)}**")
 
 else:
     uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
@@ -102,6 +102,9 @@ else:
         st.stop()
 
 
+# =============================
+# DISTRIBUTION TRANSFORMATION
+# =============================
 st.subheader("⚙️ Distribution Transformation")
 
 skewness = st.slider(
@@ -110,9 +113,8 @@ skewness = st.slider(
     10.0,
     0.0,
     0.5,
-    key="global_skewness_slider",
+    key="transform_skewness_slider",
 )
-
 
 data = apply_skewness(data, skewness)
 
@@ -158,7 +160,7 @@ with c3:
 # -----------------------------
 # Visualization Selector
 # -----------------------------
-st.subheader("Select Visualization")
+st.subheader("📈 Select Visualization")
 
 visualization_name = st.selectbox(
     "Visualization Type",
