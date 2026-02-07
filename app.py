@@ -185,7 +185,6 @@ render_insight_panel(
     mode=mode,
 )
 
-
 # =============================
 # Hypothesis Testing
 # =============================
