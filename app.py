@@ -39,6 +39,8 @@ from core.dataset_manager import get_active_dataset
 
 from ui.comparison import render_comparison_dashboard
 
+from ui.report_panel import render_report_download
+
 
 
 
@@ -276,9 +278,34 @@ fig = render_fn(data, config=config)
 st.pyplot(fig)
 
 # -----------------------------
+# Automated Insight Panel
+# -----------------------------
+render_insight_panel(
+    skew_label=skew_label,
+    is_normal=is_normal,
+    mean=mean,
+    median=median,
+    mode=mode,
+)
+
+
+# -----------------------------
+# Export Report Download   ← PLACE HERE
+# -----------------------------
+render_report_download(
+    mean=mean,
+    median=median,
+    mode=mode,
+    variance=variance,
+    std_dev=std_dev,
+    skewness=skew_value,
+    insight=insight_text,
+)
+
+# -----------------------------
 # Dataset Comparison Dashboard
 # -----------------------------
-from ui.comparison import render_comparison_dashboard
+render_comparison_dashboard()
 
 
 # -----------------------------
