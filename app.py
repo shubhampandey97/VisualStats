@@ -32,6 +32,8 @@ from logic.hypothesis import normality_test, one_sample_ttest
 from ui.insight_cards import render_skewness_cards
 from ui.interpretation import render_interpretation_banner
 from ui.diagnostics import render_normality_diagnostics
+from ui.insight_panel import render_insight_panel
+
 
 
 
@@ -174,6 +176,15 @@ with c3:
     st.metric("IQR", f"{iqr:.2f}")
 
 render_normality_diagnostics(data)
+
+render_insight_panel(
+    skew_label=get_skew_label(skewness) if data_source == "Synthetic Distribution" else "Unknown",
+    is_normal=(skew_value == 0 or abs(skew_value) < 0.5),
+    mean=mean,
+    median=median,
+    mode=mode,
+)
+
 
 # =============================
 # Hypothesis Testing
