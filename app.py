@@ -34,6 +34,10 @@ from ui.interpretation import render_interpretation_banner
 from ui.diagnostics import render_normality_diagnostics
 from ui.insight_panel import render_insight_panel
 
+from ui.workspace import render_workspace_sidebar
+from core.dataset_manager import get_active_dataset
+
+
 
 
 
@@ -44,6 +48,10 @@ from ui.insight_panel import render_insight_panel
 # App configuration
 # -----------------------------
 st.set_page_config(page_title="Statistics Explorer", layout="centered")
+
+render_workspace_sidebar()
+
+
 st.title("📊 Statistics Explorer")
 
 
@@ -59,10 +67,12 @@ register_visualizations(registry)
 # -----------------------------
 st.subheader("📂 Data Source")
 
-data_source = st.radio(
-    "Choose data source",
-    ["Synthetic Distribution", "Upload CSV"],
-)
+data = get_active_dataset()
+
+if data is None:
+    st.info("Upload or generate a dataset from the sidebar to begin.")
+    st.stop()
+
 
 
 # -----------------------------
