@@ -31,6 +31,8 @@ from logic.transforms import apply_skewness
 from logic.hypothesis import normality_test, one_sample_ttest
 from ui.insight_cards import render_skewness_cards
 from ui.interpretation import render_interpretation_banner
+from ui.diagnostics import render_normality_diagnostics
+
 
 
 
@@ -171,6 +173,7 @@ with c3:
     st.metric("Q3", f"{q3:.2f}")
     st.metric("IQR", f"{iqr:.2f}")
 
+render_normality_diagnostics(data)
 
 # =============================
 # Hypothesis Testing
