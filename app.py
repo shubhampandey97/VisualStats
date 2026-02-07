@@ -37,6 +37,9 @@ from ui.insight_panel import render_insight_panel
 from ui.workspace import render_workspace_sidebar
 from core.dataset_manager import get_active_dataset
 
+from ui.comparison import render_comparison_dashboard
+
+
 
 
 
@@ -271,6 +274,11 @@ if visualization_name == "Histogram":
 render_fn = registry.get(visualization_name)
 fig = render_fn(data, config=config)
 st.pyplot(fig)
+
+# -----------------------------
+# Dataset Comparison Dashboard
+# -----------------------------
+from ui.comparison import render_comparison_dashboard
 
 
 # -----------------------------
