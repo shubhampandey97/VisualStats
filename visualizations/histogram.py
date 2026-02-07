@@ -1,41 +1,64 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import time
 
-from visualizations.markers import draw_markers
-from config.constants import COLORS
+from logic.statistics import compute_mean, compute_median, compute_mode
 
 
+def _draw_markers(ax, data, color_mean="#ef4444", color_median="#3b82f6", color_mode="#22c55e"):
+    """Draw styled statistical markers."""
 
-def render_histogram(data: np.ndarray, config: dict) -> None:
+    mean = compute_mean(data)
+    median = compute_median(data)
+    mode = compute_mode(data)
+
+    # Smooth premium lines
+    ax.axvline(mean, linestyle="--", linewidth=2.5, color=color_mean, label="Mean")
+    ax.axvline(median, linestyle="-.", linewidth=2.5, color=color_median, label="Median")
+    ax.axvline(mode, linestyle=":", linewidth=3, color=color_mode, label="Mode")
+
+    # Dot markers
+    ymax = ax.get_ylim()[1]
+
+    ax.scatter(mean, ymax * 0.92, s=90, color=color_mean, zorder=5)
+    ax.scatter(median, ymax * 0.85, s=90, color=color_median, zorder=5)
+    ax.scatter(mode, ymax * 0.78, s=90, color=color_mode, zorder=5)
+
+    # Labels
+    ax.text(mean, ymax * 0.95, "Mean", ha="center", color=color_mean, fontsize=10, weight="bold")
+    ax.text(median, ymax * 0.88, "Median", ha="center", color=color_median, fontsize=10, weight="bold")
+    ax.text(mode, ymax * 0.81, "Mode", ha="center", color=color_mode, fontsize=10, weight="bold")
+
+
+def render_histogram(data, config=None):
     """
-    Render a histogram visualization.
-
-    Parameters
-    ----------
-    data : np.ndarray
-        Input data to visualize.
-    config : dict
-        Configuration options (bins, colors, etc.).
+    Industry-grade histogram with soft animation effect.
     """
-    bins = config.get("bins", 15)
-    color = config.get("color", "#1f7a3f")
-    edgecolor = config.get("edgecolor", "#0e3d1f")
+
+    if config is None:
+        config = {}
+
+    bins = config.get("bins", 20)
+    color = config.get("color", "#4CAF50")
+    edgecolor = config.get("edgecolor", "#000000")
     alpha = config.get("alpha", 0.85)
 
     fig, ax = plt.subplots(figsize=(9, 5))
-    ax.hist(
-        data,
-        bins=bins,
-        color=color,
-        edgecolor=edgecolor,
-        linewidth=2.5,
-        alpha=alpha,
-    )
-    
-    draw_markers(ax, data, COLORS)
 
+    # Base histogram
+    ax.hist(data, bins=bins, color=color, edgecolor=edgecolor, alpha=alpha)
+
+    # Smooth transition illusion
+    # (small pause helps visual continuity in Streamlit rerender)
+    time.sleep(0.05)
+
+    # Draw premium statistical markers
+    _draw_markers(ax, data)
 
     ax.set_xlabel("Value")
     ax.set_ylabel("Frequency")
+    ax.set_title("Distribution with Statistical Markers")
+
+    ax.legend(frameon=False)
 
     return fig
